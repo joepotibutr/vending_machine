@@ -16,22 +16,16 @@ import Clock from "react-live-clock";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 
 import { GiVendingMachine } from "react-icons/gi";
-import { useState } from "react";
 import useBalance from "./hooks/useBalance";
+import useKeypad from "./hooks/useKeypad";
+import useProducts from "./hooks/useProducts";
+import usePagination from "./hooks/usePagination";
 
-type Props = {};
-
-const Main = (props: Props) => {
-  const [keypad, setKeypad] = useState("");
-
+const Main = () => {
+  const { keypad, setKeypad } = useKeypad();
   const { balance, insertCoin, returnTheChange } = useBalance();
-
-  const handleKeypadChange = (key: number) => {
-    setKeypad((prev) => {
-      if (prev.length === 2) return "";
-      return prev + key;
-    });
-  };
+  const { products } = useProducts();
+  const { list, currentPage } = usePagination({ max: 9, items: products });
 
   const now = new Date();
   return (
@@ -79,13 +73,19 @@ const Main = (props: Props) => {
                     templateColumns="repeat(3, 100px)"
                     gap="2"
                   >
-                    {[...Array(9)].map((_, i) => (
-                      <GridItem key={i}>
-                        <Card height={20} size="md">
-                          {i}
-                        </Card>
-                      </GridItem>
-                    ))}
+                    {list.map((product, index) => {
+                      const Icon = product.icon;
+
+                      return (
+                        <GridItem key={product.id}>
+                          <Card height={20} size="md">
+                            <Text textStyle="bold">{currentPage + index}</Text>
+                            <Text></Text>
+                            <Icon size={40} />
+                          </Card>
+                        </GridItem>
+                      );
+                    })}
                   </Grid>
 
                   <Flex gap={6}>
@@ -119,7 +119,7 @@ const Main = (props: Props) => {
                   gap={1}
                 >
                   {[...Array(9)].map((_, key) => (
-                    <Button key={key} onClick={() => handleKeypadChange(key)}>
+                    <Button key={key} onClick={() => setKeypad(key)}>
                       {key}
                     </Button>
                   ))}

@@ -1,27 +1,22 @@
-import { useDispatch, useSelector } from "react-redux"
-import { RootState } from "../store"
-import { resetKeypad, setKeypadAction } from "../modules/keypad"
-import { useCallback } from "react"
-import { openModalAction } from "../modules/modal"
+import { useCallback, useMemo, useState } from "react"
+import { getProducts } from "../mock"
+import useBalance from "./useBalance"
 
 const useProducts = () => {
-    const dispatch = useDispatch()
-    const keypad = useSelector((state: RootState) => state.keypad)
+    const { deductBalance } = useBalance()
+    const [products, setProducts] = useState(getProducts())
 
-    const setKeypad = useCallback((key: string) => {
-        if (keypad.length === 2) {
-            dispatch(openModalAction({
-                data: keypad
-            }))
-            dispatch(resetKeypad())
-            return
-        }
-        dispatch(setKeypadAction(key))
-    }, [keypad])
+    const checkOut = useCallback((id: keyof typeof products) => {
+        // setProducts(currentProducts => {
+        //     currentProducts[id].quantity - 1
+        //     return currentProducts
+        // })
+        // deductBalance(products[id].price)
+    }, [products])
 
     return {
-        keypad,
-        setKeypad
+        products,
+        checkOut
     }
 }
 
