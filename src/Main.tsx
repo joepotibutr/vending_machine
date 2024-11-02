@@ -31,106 +31,100 @@ import { GiCookie } from "react-icons/gi";
 
 const products = [
   {
-    id: "01",
+    id: "11",
     name: "Beer 01",
     price: 12.23,
     quantity: 0,
     icon: PiBeerBottleBold,
   },
   {
-    id: "01",
+    id: "12",
     name: "Beer 01",
     price: 12.23,
     quantity: 0,
-    icon: PiBeerBottleBold,
+    icon: FaWineBottle,
   },
   {
-    id: "01",
+    id: "13",
     name: "Beer 01",
     price: 12.23,
     quantity: 0,
-    icon: PiBeerBottleBold,
+    icon: PiBeerBottle,
   },
   {
-    id: "01",
+    id: "14",
     name: "Beer 01",
     price: 12.23,
     quantity: 0,
-    icon: PiBeerBottleBold,
+    icon: PiBeerBottleFill,
   },
   {
-    id: "01",
+    id: "15",
     name: "Beer 01",
     price: 12.23,
     quantity: 0,
-    icon: PiBeerBottleBold,
+    icon: PiOrangeDuotone,
   },
   {
-    id: "01",
+    id: "16",
     name: "Beer 01",
     price: 12.23,
     quantity: 0,
-    icon: PiBeerBottleBold,
+    icon: GiWaterFlask,
   },
   {
-    id: "01",
+    id: "17",
     name: "Beer 01",
     price: 12.23,
     quantity: 0,
-    icon: PiBeerBottleBold,
+    icon: MdOutlineEmojiFoodBeverage,
   },
   {
-    id: "01",
+    id: "18",
     name: "Beer 01",
     price: 12.23,
     quantity: 0,
-    icon: PiBeerBottleBold,
+    icon: PiBeerBottleDuotone,
   },
   {
-    id: "01",
+    id: "19",
     name: "Beer 01",
     price: 12.23,
     quantity: 0,
-    icon: PiBeerBottleBold,
+    icon: GiCookie,
   },
   {
-    id: "01",
+    id: "20",
     name: "Beer 01",
     price: 12.23,
     quantity: 0,
-    icon: PiBeerBottleBold,
+    icon: GiShinyApple,
   },
   {
-    id: "01",
+    id: "21",
     name: "Beer 01",
     price: 12.23,
     quantity: 0,
-    icon: PiBeerBottleBold,
-  },
-  {
-    id: "01",
-    name: "Beer 01",
-    price: 12.23,
-    quantity: 0,
-    icon: PiBeerBottleBold,
+    icon: FaJarWheat,
   },
 ];
 
 import { GiVendingMachine } from "react-icons/gi";
 import { useState } from "react";
+import useCoins from "./hooks/useCoins";
 
 type Props = {};
 
 const Main = (props: Props) => {
-  const [cash, setCash] = useState(0);
   const [keypad, setKeypad] = useState("");
 
-  const handleKeypadChange = (event: React.MouseEvent<HTMLButtonElement>) => {
-    if (keypad.length === 2) {
-      setKeypad("");
-    } else {
-      setKeypad((prev) => prev + event.currentTarget.textContent);
-    }
+  const { coins, insertCoin } = useCoins();
+
+  const handleKeypadChange = (key: number) => {
+    setKeypad((prev) => {
+      if (prev.length === 2) return "";
+      return prev + key;
+    });
   };
 
   const now = new Date();
@@ -218,9 +212,9 @@ const Main = (props: Props) => {
                   templateRows="auto"
                   gap={1}
                 >
-                  {[...Array(9)].map((_, i) => (
-                    <Button key={i} onClick={handleKeypadChange}>
-                      {i}
+                  {[...Array(9)].map((_, key) => (
+                    <Button key={key} onClick={() => handleKeypadChange(key)}>
+                      {key}
                     </Button>
                   ))}
                 </Grid>
@@ -231,24 +225,15 @@ const Main = (props: Props) => {
                   <Text textAlign="center">Insert coin here</Text>
                   <HStack gap="4"></HStack>
                 </Flex>
-                <Input value={cash} />
+                <Input defaultValue={coins} value={coins} />
 
-                <Button
-                  rounded="3xl"
-                  onClick={() => setCash((prev) => prev + 1)}
-                >
+                <Button rounded="3xl" onClick={() => insertCoin(1)}>
                   1 THB
                 </Button>
-                <Button
-                  rounded="3xl"
-                  onClick={() => setCash((prev) => prev + 5)}
-                >
+                <Button rounded="3xl" onClick={() => insertCoin(5)}>
                   5 THB
                 </Button>
-                <Button
-                  rounded="3xl"
-                  onClick={() => setCash((prev) => prev + 10)}
-                >
+                <Button rounded="3xl" onClick={() => insertCoin(10)}>
                   10 THB
                 </Button>
               </Flex>
