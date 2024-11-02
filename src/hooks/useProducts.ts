@@ -4,9 +4,7 @@ import { resetKeypad, setKeypadAction } from "../modules/keypad"
 import { useCallback } from "react"
 import { openModalAction } from "../modules/modal"
 
-
-
-const useKeypad = () => {
+const useProducts = () => {
     const dispatch = useDispatch()
     const keypad = useSelector((state: RootState) => state.keypad)
 
@@ -27,4 +25,4 @@ const useKeypad = () => {
     }
 }
 
-export default useKeypad
+export default useProducts

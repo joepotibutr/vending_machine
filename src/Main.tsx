@@ -1,10 +1,8 @@
 import {
-  Bleed,
   Box,
   Button,
   Card,
   Container,
-  defineStyle,
   Flex,
   Grid,
   GridItem,
@@ -17,108 +15,16 @@ import {
 import Clock from "react-live-clock";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 
-import { FaWineBottle } from "react-icons/fa";
-import { PiBeerBottleBold } from "react-icons/pi";
-import { PiBeerBottle } from "react-icons/pi";
-import { PiBeerBottleDuotone } from "react-icons/pi";
-import { PiBeerBottleFill } from "react-icons/pi";
-import { PiOrangeDuotone } from "react-icons/pi";
-import { GiShinyApple } from "react-icons/gi";
-import { GiWaterFlask } from "react-icons/gi";
-import { MdOutlineEmojiFoodBeverage } from "react-icons/md";
-import { FaJarWheat } from "react-icons/fa6";
-import { GiCookie } from "react-icons/gi";
-
-const products = [
-  {
-    id: "11",
-    name: "Beer 01",
-    price: 12.23,
-    quantity: 0,
-    icon: PiBeerBottleBold,
-  },
-  {
-    id: "12",
-    name: "Beer 01",
-    price: 12.23,
-    quantity: 0,
-    icon: FaWineBottle,
-  },
-  {
-    id: "13",
-    name: "Beer 01",
-    price: 12.23,
-    quantity: 0,
-    icon: PiBeerBottle,
-  },
-  {
-    id: "14",
-    name: "Beer 01",
-    price: 12.23,
-    quantity: 0,
-    icon: PiBeerBottleFill,
-  },
-  {
-    id: "15",
-    name: "Beer 01",
-    price: 12.23,
-    quantity: 0,
-    icon: PiOrangeDuotone,
-  },
-  {
-    id: "16",
-    name: "Beer 01",
-    price: 12.23,
-    quantity: 0,
-    icon: GiWaterFlask,
-  },
-  {
-    id: "17",
-    name: "Beer 01",
-    price: 12.23,
-    quantity: 0,
-    icon: MdOutlineEmojiFoodBeverage,
-  },
-  {
-    id: "18",
-    name: "Beer 01",
-    price: 12.23,
-    quantity: 0,
-    icon: PiBeerBottleDuotone,
-  },
-  {
-    id: "19",
-    name: "Beer 01",
-    price: 12.23,
-    quantity: 0,
-    icon: GiCookie,
-  },
-  {
-    id: "20",
-    name: "Beer 01",
-    price: 12.23,
-    quantity: 0,
-    icon: GiShinyApple,
-  },
-  {
-    id: "21",
-    name: "Beer 01",
-    price: 12.23,
-    quantity: 0,
-    icon: FaJarWheat,
-  },
-];
-
 import { GiVendingMachine } from "react-icons/gi";
 import { useState } from "react";
-import useCoins from "./hooks/useCoins";
+import useBalance from "./hooks/useBalance";
 
 type Props = {};
 
 const Main = (props: Props) => {
   const [keypad, setKeypad] = useState("");
 
-  const { coins, insertCoin } = useCoins();
+  const { balance, insertCoin, returnTheChange } = useBalance();
 
   const handleKeypadChange = (key: number) => {
     setKeypad((prev) => {
@@ -144,7 +50,7 @@ const Main = (props: Props) => {
           rounded="lg"
           boxShadow="2xl"
         >
-          <Bleed padding={5} borderRadius={0} backgroundColor="teal.400">
+          <Box padding={5} borderRadius={0} backgroundColor="teal.400">
             <Flex justifyContent="space-between" alignItems="center">
               <Flex alignItems="center">
                 <GiVendingMachine size={100} />
@@ -162,7 +68,7 @@ const Main = (props: Props) => {
                 </Text>
               </Box>
             </Flex>
-          </Bleed>
+          </Box>
 
           <Box padding={4}>
             <Flex height={300}>
@@ -175,9 +81,9 @@ const Main = (props: Props) => {
                   >
                     {[...Array(9)].map((_, i) => (
                       <GridItem key={i}>
-                        <Card.Root height={20} size="md">
+                        <Card height={20} size="md">
                           {i}
-                        </Card.Root>
+                        </Card>
                       </GridItem>
                     ))}
                   </Grid>
@@ -196,7 +102,7 @@ const Main = (props: Props) => {
             </Flex>
           </Box>
 
-          <Bleed padding={3} borderRadius={0} backgroundColor="teal.400">
+          <Box padding={3} borderRadius={0} backgroundColor="teal.400">
             <Flex gap={4} alignItems="center">
               <Flex
                 marginTop={5}
@@ -225,7 +131,11 @@ const Main = (props: Props) => {
                   <Text textAlign="center">Insert coin here</Text>
                   <HStack gap="4"></HStack>
                 </Flex>
-                <Input defaultValue={coins} value={coins} />
+                <Input
+                  defaultValue={balance}
+                  value={balance}
+                  onClick={returnTheChange}
+                />
 
                 <Button rounded="3xl" onClick={() => insertCoin(1)}>
                   1 THB
@@ -238,7 +148,7 @@ const Main = (props: Props) => {
                 </Button>
               </Flex>
             </Flex>
-          </Bleed>
+          </Box>
         </Box>
       </Container>
     </Box>

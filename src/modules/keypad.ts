@@ -6,11 +6,13 @@ const keypadSlice = createSlice({
     initialState: '',
     reducers: {
       setKeypadAction(state, action) {
-        if (state.length === 2) return "";
         return state + action.payload;
+      },
+      resetKeypad() {
+        return ''
       },
     },
   });
   
-  export const { setKeypadAction } = keypadSlice.actions;
+  export const { setKeypadAction, resetKeypad } = keypadSlice.actions;
   export const keypadReducer = keypadSlice.reducer;

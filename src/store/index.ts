@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { coinsReducer } from "../modules/coins";
 import { keypadReducer } from "../modules/keypad";
 import { modalReducer } from "../modules/modal";
+import { balanceReducer } from "../modules/balance";
 
 export const store = configureStore({
     reducer: {
-      coins: coinsReducer,
+      balance: balanceReducer,
       keypad: keypadReducer,
       modal: modalReducer
     },
