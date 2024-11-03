@@ -6,7 +6,7 @@ import { useToast } from "@chakra-ui/react";
 
 const useBalance = () => {
     const dispatch = useDispatch()
-  const toast = useToast();
+    const toast = useToast();
 
  
     const balance = useSelector((state: RootState) => state.balance)
@@ -24,10 +24,11 @@ const useBalance = () => {
     const returnTheChange = useCallback(() => {
         toast({
             title: "Return the change",
-            description: `Your change ${balance} THB has return successfully`,
+            description: `Your change of ${balance} THB has returned successfully`,
             duration: 10000,
             status: 'success',
-            position: 'bottom-right'
+            position: 'bottom-right',
+            isClosable: true
           })
 
 

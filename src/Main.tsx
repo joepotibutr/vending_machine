@@ -25,12 +25,17 @@ const Main = () => {
   const { keypad, setKeypad } = useKeypad();
   const { balance, insertCoin, returnTheChange } = useBalance();
   const { products } = useProducts();
-  const { list, currentPage } = usePagination({ max: 9, items: products });
+  const { list, prev, next, currentPage, lastPage } = usePagination({
+    max: 9,
+    items: Object.values(products),
+  });
 
   const now = new Date();
   return (
     <Box
-      margin={40}
+      marginTop={10}
+      marginLeft={40}
+      marginRight={40}
       padding={10}
       rounded="sm"
       borderWidth={1}
@@ -65,40 +70,51 @@ const Main = () => {
           </Box>
 
           <Box padding={4}>
-            <Flex height={300}>
-              <Container>
-                <Flex flexDirection="column" alignItems="center" gap={2}>
-                  <Grid
-                    justifyContent="space-between"
-                    templateColumns="repeat(3, 100px)"
-                    gap="2"
-                  >
-                    {list.map((product, index) => {
-                      const Icon = product.icon;
+            <Flex height={550}>
+              <Flex flexDirection="column" alignItems="center" gap={2}>
+                <Grid
+                  justifyContent="space-between"
+                  templateColumns="repeat(3, 123px)"
+                  gap="2"
+                >
+                  {list.map((product) => {
+                    const Icon = product.icon;
 
-                      return (
-                        <GridItem key={product.id}>
-                          <Card height={20} size="md">
-                            <Text textStyle="bold">{currentPage + index}</Text>
-                            <Text></Text>
+                    return (
+                      <GridItem key={product.productCode}>
+                        <Card height={40}>
+                          <Flex
+                            flexDirection="column"
+                            justifyContent="space-around"
+                            alignItems="center"
+                            height="100%"
+                          >
+                            <Text textStyle="bold">
+                              {product.productCode}: {product.name}
+                            </Text>
                             <Icon size={40} />
-                          </Card>
-                        </GridItem>
-                      );
-                    })}
-                  </Grid>
+                            <Text> {product.price}฿ </Text>
+                          </Flex>
+                        </Card>
+                      </GridItem>
+                    );
+                  })}
+                </Grid>
 
-                  <Flex gap={6}>
-                    <IconButton aria-label="Call support" rounded="full">
-                      <MdNavigateBefore />
-                    </IconButton>
+                <Flex gap={6} alignItems="center">
+                  <IconButton aria-label="prev" onClick={prev} rounded="full">
+                    <MdNavigateBefore />
+                  </IconButton>
 
-                    <IconButton aria-label="Call support" rounded="full">
-                      <MdNavigateNext />
-                    </IconButton>
-                  </Flex>
+                  <Text>
+                    {currentPage}/{lastPage}
+                  </Text>
+
+                  <IconButton aria-label="next" onClick={next} rounded="full">
+                    <MdNavigateNext />
+                  </IconButton>
                 </Flex>
-              </Container>
+              </Flex>
             </Flex>
           </Box>
 
@@ -111,7 +127,7 @@ const Main = () => {
                 flexDirection="column"
                 justifyContent="center"
               >
-                <Input value={keypad} />
+                <Input readOnly value={keypad} />
                 <Grid
                   justifyContent="space-between"
                   templateColumns="repeat(3, 40px)"
@@ -131,20 +147,38 @@ const Main = () => {
                   <Text textAlign="center">Insert coin here</Text>
                   <HStack gap="4"></HStack>
                 </Flex>
-                <Input
-                  defaultValue={balance}
-                  value={balance}
-                  onClick={returnTheChange}
-                />
+                <Input readOnly value={balance} />
+                <Flex gap={2}>
+                  <Button
+                    width="40px"
+                    rounded="3xl"
+                    size="sm"
+                    onClick={() => insertCoin(1)}
+                  >
+                    1฿
+                  </Button>
+                  <Button
+                    width="40px"
+                    rounded="3xl"
+                    size="sm"
+                    onClick={() => insertCoin(5)}
+                  >
+                    5฿
+                  </Button>
+                  <Button
+                    width="40px"
+                    rounded="3xl"
+                    size="sm"
+                    onClick={() => insertCoin(10)}
+                  >
+                    10฿
+                  </Button>
+                </Flex>
 
-                <Button rounded="3xl" onClick={() => insertCoin(1)}>
-                  1 THB
-                </Button>
-                <Button rounded="3xl" onClick={() => insertCoin(5)}>
-                  5 THB
-                </Button>
-                <Button rounded="3xl" onClick={() => insertCoin(10)}>
-                  10 THB
+                <Button>
+                  <Text fontSize={12} onClick={returnTheChange}>
+                    Return the balance
+                  </Text>
                 </Button>
               </Flex>
             </Flex>

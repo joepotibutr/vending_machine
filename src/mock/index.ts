@@ -20,90 +20,101 @@ interface IProduct {
     price: number;
     quantity: number;
     icon: IconType;
+    productCode: string
 }
 
-const products = {
-    11: {
+const products = [
+     {
       id: "11",
       name: "Beer 01",
-      price: 12.23,
+      price: 20,
       quantity: rndInt(),
       icon: PiBeerBottleBold,
     },
-    12: {
+     {
       id: "12",
       name: "Wine 02",
-      price: 12.23,
+      price: 100,
       quantity: rndInt(),
       icon: FaWineBottle,
     },
-    13: {
+     {
       id: "13",
       name: "Beer 02",
-      price: 12.23,
+      price: 25,
       quantity: rndInt(),
       icon: PiBeerBottle,
     },
-    14: {
+     {
       id: "14",
       name: "Beer 03",
-      price: 12.23,
+      price: 30,
       quantity: rndInt(),
       icon: PiBeerBottleFill,
     },
-    15: {
+     {
       id: "15",
       name: "Orange 01",
-      price: 12.23,
+      price: 5,
       quantity: rndInt(),
       icon: PiOrangeDuotone,
     },
-    16: {
+     {
       id: "16",
       name: "Water 01",
-      price: 12.23,
+      price: 5,
       quantity: rndInt(),
       icon: GiWaterFlask,
     },
-    17: {
+     {
       id: "17",
       name: "Food 01",
-      price: 12.23,
+      price: 15,
       quantity: rndInt(),
       icon: MdOutlineEmojiFoodBeverage,
     },
-    18: {
+     {
       id: "18",
       name: "Beer 04",
-      price: 12.23,
+      price: 25,
       quantity: rndInt(),
       icon: PiBeerBottleDuotone,
     },
-    19: {
+     {
       id: "19",
       name: "Cookie 01",
-      price: 12.23,
+      price: 5,
       quantity: rndInt(),
       icon: GiCookie,
     },
-    20: {
+     {
       id: "20",
       name: "Apple 01",
-      price: 12.23,
+      price: 12,
       quantity: rndInt(),
       icon: GiShinyApple,
     },
-    21: {
+     {
       id: "21",
       name: "Oat Milk 01",
-      price: 12.23,
+      price: 18,
       quantity: rndInt(),
       icon: FaJarWheat,
     },
-}
+  ]
 
-  export const getProducts = (): Array<IProduct> => 
-    Object.values(products).reduce((flatList, currentProduct) => {
-      const cloned = new Array(currentProduct.quantity).fill(currentProduct)
-      return [...flatList, ...cloned]
+  export const getProducts = (): Record<string, IProduct> => 
+    products.reduce((acc, currentProduct) => {
+      const cloned = [...new Array(currentProduct.quantity)].map((_, amountIndex) => {
+        const generatedProductCode = (acc.length  + amountIndex)
+        const normalizedProductCode = generatedProductCode < 9 ? `0${generatedProductCode}` : generatedProductCode.toString()
+
+        return { ...currentProduct, productCode: normalizedProductCode  }
+      })
+
+      return [...acc, ...cloned ]
     }, [])
+    .reduce((acc, currentProduct) => {
+      acc[currentProduct.productCode] = currentProduct
+      return acc
+    }, {})

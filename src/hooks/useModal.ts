@@ -8,6 +8,7 @@ const useModal = () => {
     const dispatch = useDispatch()
     const isOpen = useSelector((state: RootState) => state.modal.isOpen)
     const modalData = useSelector((state: RootState) => state.modal.data)
+    const modalType = useSelector((state: RootState) => state.modal.type)
 
     const open = useCallback((data?: any) => {
         dispatch(openModalAction(data))
@@ -16,6 +17,7 @@ const useModal = () => {
     return {
         isOpen,
         modalData,
+        modalType,
         open
     }
 }

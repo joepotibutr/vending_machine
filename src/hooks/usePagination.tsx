@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 interface IusePaginationProps {
   items: Array<any>;
@@ -6,20 +6,35 @@ interface IusePaginationProps {
 }
 
 const usePagination = ({ max, items }: IusePaginationProps) => {
-  // const max = list.length / max
-  const [currentPage, setPage] = useState(0);
-  const limit = Math.floor(items.length / max);
+  const [currentPage, setPage] = useState(1);
+  const lastPage = useMemo(() => Math.ceil(items.length / max), [items, max]);
 
-  console.log();
+  const prev = useCallback(
+    () => setPage((prev) => (prev <= 1 ? lastPage : prev - 1)),
+    [lastPage]
+  );
 
-  const prev = () => setPage((prev) => (prev <= 0 ? items.length : prev - 1));
-  const next = () => setPage((prev) => (prev >= limit ? 0 : prev + 1));
+  const next = useCallback(
+    () => setPage((prev) => (prev >= lastPage ? 1 : prev + 1)),
+    [lastPage]
+  );
+
+  const currentWindow = useMemo(
+    () => (currentPage - 1) * max,
+    [max, currentPage]
+  );
+
+  const currentList = useMemo(
+    () => items.slice(currentWindow, currentWindow + max),
+    [currentWindow, max]
+  );
 
   return {
-    list: items.slice(currentPage),
+    list: currentList,
     prev,
     next,
     currentPage,
+    lastPage,
   };
 };
 

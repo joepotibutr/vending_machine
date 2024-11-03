@@ -1,29 +1,34 @@
 import {
   Modal as ChakraModal,
-  ModalBody,
-  ModalCloseButton,
   ModalContent,
-  ModalFooter,
-  ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/modal";
 import { Box, Button } from "@chakra-ui/react";
 import useModal from "./hooks/useModal";
+import Product from "./Product";
+import { useCallback } from "react";
 
 const Modal = () => {
-  const { isOpen, open, modalData } = useModal();
+  const { isOpen, open, modalData, modalType } = useModal();
 
-  const renderModalContent = () => {
-    switch (modalData?.type) {
-      case "confirm":
-        return <div>Confirm</div>;
+  const renderModalContent = useCallback(() => {
+    switch (modalType) {
+      case "product":
+        return <Product data={modalData} />;
       default:
         return null;
     }
-  };
+  }, [modalData, modalType]);
+
+  const renderModalTitle = useCallback(() => {
+    switch (modalType) {
+      case "product":
+        return;
+    }
+  }, [modalType, modalData]);
 
   return (
-    <ChakraModal isOpen={isOpen} onClose={() => open()}>
+    <ChakraModal isOpen={isOpen} onClose={open}>
       <Box
         textAlign="center"
         borderWidth={1}
@@ -32,19 +37,7 @@ const Modal = () => {
         boxShadow="2xl"
       >
         <ModalOverlay>
-          <ModalContent>
-            <ModalHeader>Modal Title</ModalHeader>
-            <ModalCloseButton />
-
-            <ModalBody>{renderModalContent()}</ModalBody>
-
-            <ModalFooter>
-              <Button colorScheme="blue" mr={3} onClick={() => open()}>
-                Close
-              </Button>
-              <Button variant="ghost">Secondary Action</Button>
-            </ModalFooter>
-          </ModalContent>
+          <ModalContent>{renderModalContent()}</ModalContent>
         </ModalOverlay>
       </Box>
     </ChakraModal>
