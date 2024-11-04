@@ -1,5 +1,8 @@
 # Vending Machine
 
+<img width="470" alt="Screenshot 2567-11-04 at 17 00 09" src="https://github.com/user-attachments/assets/b949c1ef-00fb-407f-86a4-24e704e7ef9e">
+
+
 Techstack: React, TypeScript, Redux, Webpack, Chakra-UI
 
 ## How to start
