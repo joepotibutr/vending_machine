@@ -1,5 +1,7 @@
 # Vending Machine
 
+Techstack: React, TypeScript, Redux, Webpack, Chakra-UI
+
 ## How to start
 
 #### 1. Open the terminal
@@ -28,4 +30,9 @@
   npm start
 ```
 
-<img width="1440" alt="vending-machine-diagram" src="https://github.com/user-attachments/assets/14961e9c-13f8-441e-b501-d903891633ac">
+## Appendix
+
+Author: Watcharapong Pothiboot vchrpng@gmail.com
+
+<img width="1440" alt="vending-machine-diagram" src="https://github.com/user-attachments/assets/df72abee-b064-4da5-9437-2a9be660f99e">
+
