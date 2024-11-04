@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react"
+import { useCallback } from "react"
 import { getProducts } from "../mock"
 import useBalance from "./useBalance"
 import { useToast } from "@chakra-ui/react";

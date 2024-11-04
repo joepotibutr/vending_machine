@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { memo, useMemo } from "react";
 import {
   ModalBody,
   ModalCloseButton,
@@ -55,4 +55,4 @@ const Product = ({ data }: IProductProps) => {
   );
 };
 
-export default Product;
+export default memo(Product);

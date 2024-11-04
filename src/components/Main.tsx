@@ -1,37 +1,11 @@
-import {
-  Box,
-  Button,
-  Card,
-  Container,
-  Flex,
-  Grid,
-  GridItem,
-  Heading,
-  HStack,
-  IconButton,
-  Input,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Container, Flex, Heading, Text } from "@chakra-ui/react";
 import Clock from "react-live-clock";
-import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
-
 import { GiVendingMachine } from "react-icons/gi";
-import useBalance from "../hooks/useBalance";
-import useKeypad from "../hooks/useKeypad";
-import useProducts from "../hooks/useProducts";
-import usePagination from "../hooks/usePagination";
-import { IconMap } from "../mock";
+import ProductList from "./ProductList";
+import Controller from "./Controller";
+import { memo } from "react";
 
 const Main = () => {
-  const { keypad, setKeypad } = useKeypad();
-  const { balance, insertCoin, returnTheChange } = useBalance();
-  const { products } = useProducts();
-
-  const { list, prev, next, currentPage, lastPage } = usePagination({
-    max: 9,
-    items: products,
-  });
-
   const now = new Date();
 
   return (
@@ -74,121 +48,15 @@ const Main = () => {
 
           <Box padding={4}>
             <Flex height={550}>
-              <Flex flexDirection="column" alignItems="center" gap={2}>
-                <Grid
-                  justifyContent="space-between"
-                  templateColumns="repeat(3, 123px)"
-                  gap="2"
-                >
-                  {list.map((product) => {
-                    const Icon = IconMap[product.id];
-
-                    return (
-                      <GridItem key={product.productCode}>
-                        <Card height={40}>
-                          <Flex
-                            flexDirection="column"
-                            justifyContent="space-around"
-                            alignItems="center"
-                            height="100%"
-                          >
-                            <Text textStyle="bold">
-                              {product.productCode}: {product.name}
-                            </Text>
-                            <Icon size={40} />
-                            <Text> {product.price}฿ </Text>
-                          </Flex>
-                        </Card>
-                      </GridItem>
-                    );
-                  })}
-                </Grid>
-
-                <Flex gap={6} alignItems="center">
-                  <IconButton aria-label="prev" onClick={prev} rounded="full">
-                    <MdNavigateBefore />
-                  </IconButton>
-
-                  <Text>
-                    {currentPage}/{lastPage}
-                  </Text>
-
-                  <IconButton aria-label="next" onClick={next} rounded="full">
-                    <MdNavigateNext />
-                  </IconButton>
-                </Flex>
-              </Flex>
+              <ProductList />
             </Flex>
           </Box>
 
-          <Box padding={3} borderRadius={0} backgroundColor="teal.400">
-            <Flex gap={4} alignItems="center">
-              <Flex
-                padding={6}
-                gap={2}
-                flexDirection="column"
-                justifyContent="center"
-              >
-                <Input readOnly value={keypad} />
-                <Grid
-                  justifyContent="space-between"
-                  templateColumns="repeat(3, 40px)"
-                  templateRows="auto"
-                  gap={1}
-                >
-                  {[...Array(10)].map((_, key) => (
-                    <Button key={key} onClick={() => setKeypad(key)}>
-                      {key}
-                    </Button>
-                  ))}
-                </Grid>
-              </Flex>
-
-              <Flex flexDirection="column" gap={2}>
-                <Flex gap={2} justifyContent="center">
-                  <Text textAlign="center">Insert coin here</Text>
-                  <HStack gap="4"></HStack>
-                </Flex>
-                <Input readOnly value={balance} />
-                <Flex gap={2}>
-                  <Button
-                    width="40px"
-                    rounded="3xl"
-                    size="sm"
-                    onClick={() => insertCoin(1)}
-                  >
-                    1฿
-                  </Button>
-                  <Button
-                    width="40px"
-                    rounded="3xl"
-                    size="sm"
-                    onClick={() => insertCoin(5)}
-                  >
-                    5฿
-                  </Button>
-                  <Button
-                    width="40px"
-                    rounded="3xl"
-                    size="sm"
-                    onClick={() => insertCoin(10)}
-                  >
-                    10฿
-                  </Button>
-                </Flex>
-
-                <Button>
-                  <Text fontSize={12} onClick={returnTheChange}>
-                    Return the balance
-                  </Text>
-                </Button>
-              </Flex>
-            </Flex>
-          </Box>
+          <Controller />
         </Box>
       </Container>
     </Box>
   );
 };
 
-export default Main;
+export default memo(Main);

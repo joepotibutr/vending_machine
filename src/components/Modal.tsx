@@ -3,15 +3,13 @@ import {
   ModalContent,
   ModalOverlay,
 } from "@chakra-ui/modal";
-import { Box, Button } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import useModal from "../hooks/useModal";
 import Product from "./Product";
-import { useCallback } from "react";
+import { memo, useCallback } from "react";
 
 const Modal = () => {
   const { isOpen, open, modalData, modalType } = useModal();
-
-  console.log("modalData =", modalData, modalType);
 
   const renderModalContent = useCallback(() => {
     switch (modalType) {
@@ -39,4 +37,4 @@ const Modal = () => {
   );
 };
 
-export default Modal;
+export default memo(Modal);

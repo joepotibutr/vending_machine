@@ -32,6 +32,7 @@ module.exports = {
     static: {
       directory: path.join(__dirname, "build"),
     },
+    open: true,
     port: 3000,
   },
 };

@@ -9,7 +9,6 @@ const productsSlice = createSlice({
         return action.payload
       },
       removeProduct(state, action) {
-        console.log(state, action)
         return state.filter((product) => product.productCode !== action.payload)
       }
     },
