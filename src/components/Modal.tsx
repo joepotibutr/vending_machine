@@ -6,19 +6,21 @@ import {
 import { Box } from "@chakra-ui/react";
 import useModal from "../hooks/useModal";
 import Product from "./Product";
-import { memo, useCallback } from "react";
+import { memo, useMemo } from "react";
 
 const Modal = () => {
   const { isOpen, open, modalData, modalType } = useModal();
 
-  const renderModalContent = useCallback(() => {
+  const Content = useMemo(() => {
     switch (modalType) {
       case "product":
-        return <Product data={modalData} />;
+        return Product;
       default:
         return null;
     }
   }, [modalData, modalType]);
+
+  if (!Content) return null;
 
   return (
     <ChakraModal isOpen={isOpen} onClose={open}>
@@ -30,7 +32,9 @@ const Modal = () => {
         boxShadow="2xl"
       >
         <ModalOverlay>
-          <ModalContent>{renderModalContent()}</ModalContent>
+          <ModalContent>
+            <Content data={modalData} />
+          </ModalContent>
         </ModalOverlay>
       </Box>
     </ChakraModal>

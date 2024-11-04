@@ -2,11 +2,13 @@ import { Card, Flex, Grid, GridItem, IconButton, Text } from "@chakra-ui/react";
 import { IconMap } from "../mock";
 import useProducts from "../hooks/useProducts";
 import usePagination from "../hooks/usePagination";
-import { memo } from "react";
+import { memo, useEffect } from "react";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 
 const ProductList = () => {
-  const { products } = useProducts();
+  const { products, initializeProducts } = useProducts();
+
+  useEffect(() => initializeProducts(), []);
 
   const { list, prev, next, currentPage, lastPage } = usePagination({
     max: 9,

@@ -1,4 +1,4 @@
-import { memo, useMemo } from "react";
+import { memo, useCallback, useMemo } from "react";
 import {
   ModalBody,
   ModalCloseButton,
@@ -8,6 +8,7 @@ import {
 import useProducts from "../hooks/useProducts";
 import { Button, Card, Flex, Text } from "@chakra-ui/react";
 import { IconMap } from "../mock";
+import useBalance from "../hooks/useBalance";
 
 interface IProductProps {
   data: {
@@ -16,20 +17,35 @@ interface IProductProps {
 }
 
 const Product = ({ data }: IProductProps) => {
-  const { products, checkOut } = useProducts();
+  const { products, checkOutFailure, checkOutSuccess } = useProducts();
+  const { deductBalance, balance } = useBalance();
 
   const product = useMemo(
     () => products.find((product) => product.productCode === data.productCode),
     [products, data.productCode]
   );
 
-  if (!product) return null;
+  const isCheckoutAvailable = useMemo(
+    () => product.price <= balance,
+    [product.price, balance]
+  );
 
   const Icon = IconMap[product.id];
 
+  const handleCheckout = useCallback(() => {
+    if (isCheckoutAvailable) {
+      deductBalance(product.price);
+      checkOutSuccess(product.productCode, product.name);
+    } else {
+      checkOutFailure(product.price - balance);
+    }
+  }, [product]);
+
+  if (!product) return null;
+
   return (
     <>
-      <ModalHeader>{`${data.productCode}: ${name}`}</ModalHeader>
+      <ModalHeader>{`${data.productCode}: ${product.name}`}</ModalHeader>
       <ModalCloseButton />
 
       <ModalBody backgroundColor="teal.400">
@@ -47,7 +63,7 @@ const Product = ({ data }: IProductProps) => {
       <ModalFooter gap={4} justifyContent="space-between">
         <Text textStyle="bold">Total: {product.price}฿</Text>
 
-        <Button mr={3} onClick={() => checkOut(data.productCode)}>
+        <Button mr={3} onClick={handleCheckout}>
           Checkout
         </Button>
       </ModalFooter>
