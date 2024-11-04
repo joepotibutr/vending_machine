@@ -27,3 +27,5 @@
 ```http
   npm start
 ```
+
+<img width="1440" alt="vending-machine-diagram" src="https://github.com/user-attachments/assets/14961e9c-13f8-441e-b501-d903891633ac">
