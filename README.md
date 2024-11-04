@@ -3,6 +3,7 @@
 <img width="470" alt="Screenshot 2567-11-04 at 17 00 09" src="https://github.com/user-attachments/assets/b949c1ef-00fb-407f-86a4-24e704e7ef9e">
 
 
+
 Techstack: React, TypeScript, Redux, Webpack, Chakra-UI
 
 ## How to start
@@ -37,5 +38,6 @@ Techstack: React, TypeScript, Redux, Webpack, Chakra-UI
 
 Author: Watcharapong Pothiboot vchrpng@gmail.com
 
-<img width="1440" alt="vending-machine-diagram" src="https://github.com/user-attachments/assets/df72abee-b064-4da5-9437-2a9be660f99e">
+<img width="1238" alt="Screenshot 2567-11-04 at 23 21 56" src="https://github.com/user-attachments/assets/9254649d-235d-49a8-a9f6-15e438104d02">
+
 
