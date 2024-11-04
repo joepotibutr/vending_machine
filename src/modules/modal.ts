@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-interface ITest { type: string, data: any }
 
 const modalSlice = createSlice({
     name: "modal",

@@ -24,9 +24,11 @@ const usePagination = ({ max, items }: IusePaginationProps) => {
     [max, currentPage]
   );
 
+  console.log("itens =", items);
+
   const currentList = useMemo(
     () => items.slice(currentWindow, currentWindow + max),
-    [currentWindow, max]
+    [items, currentWindow, max]
   );
 
   return {

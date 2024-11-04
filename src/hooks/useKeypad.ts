@@ -20,7 +20,7 @@ const useKeypad = () => {
 
     useEffect(() => {
         if (keypad.length === 2) {
-            const product = products[keypad]
+            const product = products.find (product => product.productCode === keypad)
             if (product) {
                 dispatch(openModalAction({
                     type: 'product',

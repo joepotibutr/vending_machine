@@ -16,21 +16,24 @@ import Clock from "react-live-clock";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 
 import { GiVendingMachine } from "react-icons/gi";
-import useBalance from "./hooks/useBalance";
-import useKeypad from "./hooks/useKeypad";
-import useProducts from "./hooks/useProducts";
-import usePagination from "./hooks/usePagination";
+import useBalance from "../hooks/useBalance";
+import useKeypad from "../hooks/useKeypad";
+import useProducts from "../hooks/useProducts";
+import usePagination from "../hooks/usePagination";
+import { IconMap } from "../mock";
 
 const Main = () => {
   const { keypad, setKeypad } = useKeypad();
   const { balance, insertCoin, returnTheChange } = useBalance();
   const { products } = useProducts();
+
   const { list, prev, next, currentPage, lastPage } = usePagination({
     max: 9,
-    items: Object.values(products),
+    items: products,
   });
 
   const now = new Date();
+
   return (
     <Box
       marginTop={10}
@@ -78,7 +81,7 @@ const Main = () => {
                   gap="2"
                 >
                   {list.map((product) => {
-                    const Icon = product.icon;
+                    const Icon = IconMap[product.id];
 
                     return (
                       <GridItem key={product.productCode}>
@@ -121,7 +124,6 @@ const Main = () => {
           <Box padding={3} borderRadius={0} backgroundColor="teal.400">
             <Flex gap={4} alignItems="center">
               <Flex
-                marginTop={5}
                 padding={6}
                 gap={2}
                 flexDirection="column"
@@ -134,7 +136,7 @@ const Main = () => {
                   templateRows="auto"
                   gap={1}
                 >
-                  {[...Array(9)].map((_, key) => (
+                  {[...Array(10)].map((_, key) => (
                     <Button key={key} onClick={() => setKeypad(key)}>
                       {key}
                     </Button>

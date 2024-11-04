@@ -5,8 +5,9 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@chakra-ui/modal";
-import useProducts from "./hooks/useProducts";
+import useProducts from "../hooks/useProducts";
 import { Button, Card, Flex, Text } from "@chakra-ui/react";
+import { IconMap } from "../mock";
 
 interface IProductProps {
   data: {
@@ -15,13 +16,16 @@ interface IProductProps {
 }
 
 const Product = ({ data }: IProductProps) => {
-  const { products } = useProducts();
+  const { products, checkOut } = useProducts();
 
-  const {
-    icon: Icon,
-    name,
-    price,
-  } = useMemo(() => products[data.productCode], [data]);
+  const product = useMemo(
+    () => products.find((product) => product.productCode === data.productCode),
+    [products, data.productCode]
+  );
+
+  if (!product) return null;
+
+  const Icon = IconMap[product.id];
 
   return (
     <>
@@ -35,15 +39,15 @@ const Product = ({ data }: IProductProps) => {
             alignItems="center"
             flexDirection="column"
           >
-            <Icon size={100} />
+            {Icon && <Icon size={100} />}
           </Flex>
         </Card>
       </ModalBody>
 
       <ModalFooter gap={4} justifyContent="space-between">
-        <Text textStyle="bold">Total: {price}฿</Text>
+        <Text textStyle="bold">Total: {product.price}฿</Text>
 
-        <Button mr={3} onClick={() => open()}>
+        <Button mr={3} onClick={() => checkOut(data.productCode)}>
           Checkout
         </Button>
       </ModalFooter>

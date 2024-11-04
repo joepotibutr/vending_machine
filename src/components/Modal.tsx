@@ -4,12 +4,14 @@ import {
   ModalOverlay,
 } from "@chakra-ui/modal";
 import { Box, Button } from "@chakra-ui/react";
-import useModal from "./hooks/useModal";
+import useModal from "../hooks/useModal";
 import Product from "./Product";
 import { useCallback } from "react";
 
 const Modal = () => {
   const { isOpen, open, modalData, modalType } = useModal();
+
+  console.log("modalData =", modalData, modalType);
 
   const renderModalContent = useCallback(() => {
     switch (modalType) {
@@ -19,13 +21,6 @@ const Modal = () => {
         return null;
     }
   }, [modalData, modalType]);
-
-  const renderModalTitle = useCallback(() => {
-    switch (modalType) {
-      case "product":
-        return;
-    }
-  }, [modalType, modalData]);
 
   return (
     <ChakraModal isOpen={isOpen} onClose={open}>
