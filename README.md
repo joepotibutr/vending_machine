@@ -1,6 +1,7 @@
 # Vending Machine
 
-<img width="470" alt="Screenshot 2567-11-04 at 17 00 09" src="https://github.com/user-attachments/assets/b949c1ef-00fb-407f-86a4-24e704e7ef9e">
+
+<img width="740" alt="Screenshot 2567-11-05 at 00 04 06" src="https://github.com/user-attachments/assets/81278bd9-31b4-43b2-b0da-68e4da2506fc">
 
 
 
@@ -38,6 +39,7 @@ Techstack: React, TypeScript, Redux, Webpack, Chakra-UI
 
 Author: Watcharapong Pothiboot vchrpng@gmail.com
 
-<img width="1238" alt="Screenshot 2567-11-04 at 23 21 56" src="https://github.com/user-attachments/assets/9254649d-235d-49a8-a9f6-15e438104d02">
+<img width="1226" alt="Screenshot 2567-11-04 at 23 27 11" src="https://github.com/user-attachments/assets/6eb34fe8-2cc5-4e42-8504-d2debfda289b">
+
 
 
