@@ -9,7 +9,16 @@ const productsSlice = createSlice({
         return action.payload
       },
       removeProduct(state, action) {
-        return state.filter((product) => product.productCode !== action.payload)
+        const currentIdx = state.findIndex((product) => product.id === action.payload)
+
+
+        return currentIdx !== -1 ? 
+        [
+          ...state.slice(0, currentIdx), 
+          { ...state[currentIdx], quantity: state[currentIdx].quantity - 1 }, 
+          ...state.slice(currentIdx + 1)
+        ] 
+        : state
       }
     },
   });

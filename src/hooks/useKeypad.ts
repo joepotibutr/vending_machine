@@ -20,17 +20,31 @@ const useKeypad = () => {
 
     useEffect(() => {
         if (keypad.length === 2) {
-            const product = products.find (product => product.productCode === keypad)
-            if (product) {
+            const product = products.find (product => product.id === keypad)
+            
+            if (product && product.quantity) {
                 dispatch(openModalAction({
                     type: 'product',
-                    data: { keypad, productCode: product.productCode },
+                    data: { keypad, id: product.id },
                 }))
-            } else {
+            }
+            
+            if (product && product.quantity <= 0) {
+                toast({
+                    title: "Product selection",
+                    description: `Product code: ${keypad} has no item.`,
+                    duration: 5000,
+                    status: 'error',
+                    position: 'bottom-right',
+                    isClosable: true
+                  })
+            }
+
+            if (!product) {
                 toast({
                     title: "Product selection",
                     description: `Product code: ${keypad} not found.`,
-                    duration: 10000,
+                    duration: 5000,
                     status: 'error',
                     position: 'bottom-right',
                     isClosable: true
@@ -38,7 +52,6 @@ const useKeypad = () => {
             }
            
             dispatch(resetKeypad())
-            return
         }
     }, [keypad])
 

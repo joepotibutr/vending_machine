@@ -5,7 +5,7 @@ import { memo } from "react";
 
 const Controller = () => {
   const { keypad, setKeypad } = useKeypad();
-  const { balance, insertCoin, returnTheChange } = useBalance();
+  const { balance, insertCoin, refundBalance } = useBalance();
 
   return (
     <Box padding={3} borderRadius={0} backgroundColor="teal.400">
@@ -64,10 +64,8 @@ const Controller = () => {
             </Button>
           </Flex>
 
-          <Button>
-            <Text fontSize={12} onClick={returnTheChange}>
-              Return the balance
-            </Text>
+          <Button onClick={refundBalance}>
+            <Text fontSize={12}>Refund balance</Text>
           </Button>
         </Flex>
       </Flex>

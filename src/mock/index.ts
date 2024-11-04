@@ -22,7 +22,7 @@ interface IProduct {
     productCode: string
 }
 
-const products = [
+export const randomProducts = [
      {
       id: "11",
       name: "Beer 01",
@@ -105,8 +105,8 @@ const products = [
     '21': FaJarWheat
   }
 
-  export const getProducts = (): Array<IProduct> => {
-    const results  =  products.reduce((acc, currentProduct) => {
+  export const generateProductCode = (products: typeof randomProducts): Array<IProduct> => {
+    const results = products.reduce((acc, currentProduct) => {
       const cloned = [...new Array(currentProduct.quantity)].map((_, amountIndex) => {
         const generatedProductCode = (acc.length  + amountIndex)
         const normalizedProductCode = generatedProductCode < 10 ? `0${generatedProductCode}` : generatedProductCode.toString()
@@ -118,7 +118,6 @@ const products = [
     }, [])
 
     return results
-
   }
    
     

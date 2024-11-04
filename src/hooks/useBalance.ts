@@ -21,11 +21,11 @@ const useBalance = () => {
         dispatch(decreaseBalance(amount))
     }, [])
 
-    const returnTheChange = useCallback(() => {
+    const refundBalance = useCallback(() => {
         toast({
-            title: "Return the change",
-            description: `Your change of ${balance} THB has returned successfully`,
-            duration: 10000,
+            title: "Refund balance",
+            description: `Your balance of ${balance} THB has been refunded successfully`,
+            duration: 5000,
             status: 'success',
             position: 'bottom-right',
             isClosable: true
@@ -38,7 +38,7 @@ const useBalance = () => {
     return {
         balance,
         insertCoin,
-        returnTheChange,
+        refundBalance,
         deductBalance
     }
 }

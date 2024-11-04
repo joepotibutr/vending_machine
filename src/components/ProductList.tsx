@@ -26,7 +26,7 @@ const ProductList = () => {
           const Icon = IconMap[product.id];
 
           return (
-            <GridItem key={product.productCode}>
+            <GridItem key={product.id}>
               <Card height={40}>
                 <Flex
                   flexDirection="column"
@@ -35,7 +35,7 @@ const ProductList = () => {
                   height="100%"
                 >
                   <Text textStyle="bold">
-                    {product.productCode}: {product.name}
+                    {product.id}: {product.name} x {product.quantity}
                   </Text>
                   <Icon size={40} />
                   <Text> {product.price}฿ </Text>

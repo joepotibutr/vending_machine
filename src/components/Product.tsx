@@ -12,7 +12,7 @@ import useBalance from "../hooks/useBalance";
 
 interface IProductProps {
   data: {
-    productCode: string;
+    id: string;
   };
 }
 
@@ -21,12 +21,12 @@ const Product = ({ data }: IProductProps) => {
   const { deductBalance, balance } = useBalance();
 
   const product = useMemo(
-    () => products.find((product) => product.productCode === data.productCode),
-    [products, data.productCode]
+    () => products.find((product) => product.id === data.id),
+    [products, data.id]
   );
 
   const isCheckoutAvailable = useMemo(
-    () => product.price <= balance,
+    () => product.price <= balance && product.quantity > 0,
     [product.price, balance]
   );
 
@@ -35,7 +35,7 @@ const Product = ({ data }: IProductProps) => {
   const handleCheckout = useCallback(() => {
     if (isCheckoutAvailable) {
       deductBalance(product.price);
-      checkOutSuccess(product.productCode, product.name);
+      checkOutSuccess(product.id, product.name);
     } else {
       checkOutFailure(product.price - balance);
     }
@@ -45,7 +45,7 @@ const Product = ({ data }: IProductProps) => {
 
   return (
     <>
-      <ModalHeader>{`${data.productCode}: ${product.name}`}</ModalHeader>
+      <ModalHeader>{`${data.id}: ${product.name}`}</ModalHeader>
       <ModalCloseButton />
 
       <ModalBody backgroundColor="teal.400">
